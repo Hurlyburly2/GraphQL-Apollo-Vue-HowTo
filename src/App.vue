@@ -1,13 +1,17 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
-    <router-view/>
+    <link-list></link-list>
   </div>
 </template>
 
 <script>
+import LinkList from './components/LinkList'
+
 export default {
-  name: 'App'
+  name: 'app',
+  components: {
+    LinkList
+  }
 }
 </script>
 
