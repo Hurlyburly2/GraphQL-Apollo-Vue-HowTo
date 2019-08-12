@@ -9,7 +9,7 @@ import Vue from 'vue'
 import VueApollo from 'vue-apollo'
 
 import App from './App'
-import router from './router'
+// import router from './router'
 
 require('dotenv').config()
 
@@ -38,6 +38,5 @@ const apolloProvider = new VueApollo({
 new Vue({
   el: '#app',
   provide: apolloProvider.provide(),
-  router,
   render: h => h(App)
 })
