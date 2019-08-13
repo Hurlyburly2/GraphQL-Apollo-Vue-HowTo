@@ -10,6 +10,8 @@ import VueApollo from 'vue-apollo'
 
 import router from './router'
 import App from './App'
+import { GC_USER_ID, GC_AUTH_TOKEN } from './constants/settings'
+import { ApolloLink } from 'apollo-link';
 // import router from './router'
 
 require('dotenv').config()
@@ -23,10 +25,20 @@ const httpLink = new HttpLink({
   uri: address
 })
 
-console.log(address)
+const authMiddleware = new ApolloLink((operation, forward) => {
+  // add the authorization to the headers
+  const token = localStorage.getItem(GC_AUTH_TOKEN)
+  operation.setContext({
+    headers: {
+      authorization: token ? `Bearer ${token}` : null
+    }
+  })
+
+  return forward(operation)
+})
 
 const apolloClient = new ApolloClient({
-  link: httpLink,
+  link: authMiddleware.concat(httpLink),
   cache: new InMemoryCache(),
   connectToDevTools: true
 })
@@ -40,10 +52,15 @@ const apolloProvider = new VueApollo({
   }
 })
 
+let userId = localStorage.getItem(GC_USER_ID)
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
   provide: apolloProvider.provide(),
   router,
+  data: {
+    userId
+  },
   render: h => h(App)
 })
+
