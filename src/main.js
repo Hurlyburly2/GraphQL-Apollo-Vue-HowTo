@@ -8,6 +8,7 @@ import Vue from 'vue'
 
 import VueApollo from 'vue-apollo'
 
+import router from './router'
 import App from './App'
 // import router from './router'
 
@@ -43,5 +44,6 @@ const apolloProvider = new VueApollo({
 new Vue({
   el: '#app',
   provide: apolloProvider.provide(),
+  router,
   render: h => h(App)
 })
