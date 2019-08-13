@@ -15,9 +15,14 @@ require('dotenv').config()
 
 Vue.config.productionTip = false
 
+debugger
+
+const address = 'https://api.graph.cool/simple/v1/' + 'cjz8trmai0vap0160ar1dax1n'
 const httpLink = new HttpLink({
-  uri: 'https://api.graph.cool/simple/v1/' + process.env.SIMPLE_HTTP_LINK
+  uri: address
 })
+
+console.log(address)
 
 const apolloClient = new ApolloClient({
   link: httpLink,
